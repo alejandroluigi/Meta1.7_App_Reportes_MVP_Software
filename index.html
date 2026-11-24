@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aplicación para reportar incidentes en la ciudad indicando su ubicación en un mapa, con opción de reporte anónimo y modo sin conexión.">
+  <link rel="icon" href="data:,">
+  <title>Reportes ciudadanos - MVP</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Reportar incidente</h1>
+    <p id="estado-red" class="estado"></p>
+
+    <form id="form-reporte" novalidate>
+      <label for="descripcion">Descripción del incidente</label>
+      <textarea id="descripcion" rows="4" maxlength="500"></textarea>
+      <small id="contador">0 / 500</small>
+      <p id="error-descripcion" class="error" role="alert" hidden></p>
+
+      <!-- Feature: localización -->
+      <label for="coordenadas">Coordenadas (latitud, longitud en grados decimales)</label>
+      <div class="fila-coord">
+        <input type="text" id="coordenadas" inputmode="decimal" placeholder="19.432608, -99.133209">
+        <button type="button" id="btn-mapa" class="secundario">Mapa</button>
+      </div>
+      <p id="error-coordenadas" class="error" role="alert" hidden></p>
+
+      <!-- Feature: anonimato -->
+      <div class="fila-toggle">
+        <label class="switch">
+          <input type="checkbox" id="toggle-anonimo" role="switch">
+          <span class="slider"></span>
+        </label>
+        <label for="toggle-anonimo">Reportar de forma anónima</label>
+      </div>
+      <p id="msg-anonimo" aria-live="polite" hidden>
+        Tus datos sensibles no serán públicos en este reporte.
+      </p>
+
+      <button type="submit" class="primario">Enviar reporte</button>
+      <p id="msg-exito" role="status" hidden></p>
+    </form>
+
+    <p id="pendientes" class="estado"></p>
+  </main>
+
+  <div id="modal-mapa" class="modal" hidden>
+    <div class="modal-contenido">
+      <div class="modal-barra">
+        <strong>Haz clic en el lugar del reporte</strong>
+        <button type="button" id="btn-cerrar-mapa" class="secundario">Cerrar</button>
+      </div>
+      <div id="mapa"></div>
+    </div>
+  </div>
+
+  <div id="toast" role="status" hidden></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
